@@ -16,6 +16,10 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,6 +42,9 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun LoopsScreen(modifier: Modifier = Modifier) {
+    var nText by remember { mutableStateOf("") }
+    var result by remember { mutableStateOf("") }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -52,19 +59,33 @@ fun LoopsScreen(modifier: Modifier = Modifier) {
         Spacer(Modifier.height(16.dp))
 
         OutlinedTextField(
-            value = "",
-            onValueChange = { },
+            value = nText,
+            onValueChange = { nText = it },
             label = { Text("Введите n") },
             singleLine = true
         )
         Spacer(Modifier.height(16.dp))
 
-        Button(onClick = { }) {
+        Button(onClick = {
+            val n = nText.toIntOrNull()
+            if (n == null || n <= 0) {
+                result = "Введите натуральное n"
+            } else {
+                // Цикл for: количество повторений известно заранее
+                var sum = 0.0
+                var fact = 1.0
+                for (k in 1..n) {
+                    fact *= k
+                    sum += 1.0 / fact
+                }
+                result = "S = $sum"
+            }
+        }) {
             Text("Вычислить")
         }
 
         Spacer(Modifier.height(16.dp))
-        Text(text = "Результат:")
+        Text(text = "Результат: $result")
     }
 }
 
