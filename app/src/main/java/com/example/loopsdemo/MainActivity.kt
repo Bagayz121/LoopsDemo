@@ -70,25 +70,39 @@ fun LoopsScreen(modifier: Modifier = Modifier) {
             val n = nText.toIntOrNull()
             if (n == null || n <= 0) {
                 result = "Введите натуральное n"
-            } else {
-                // Цикл do-while: тело выполняется минимум один раз,
-                // условие проверяется в конце
-                var sum = 0.0
-                var fact = 1.0
-                var k = 1
-                do {
-                    fact *= k
-                    sum += 1.0 / fact
-                    k++
-                } while (k <= n)
-                result = "S = $sum"
+                return@Button
+            }
+            if (n > 20) {
+                // 20! уже огромное число, а сумма практически равна e - 1
+                result = "n слишком велико (точность теряется)"
+                return@Button
+            }
+
+            // Цикл do-while с контролем результата
+            var sum = 0.0
+            var fact = 1.0
+            var lastTerm = 0.0
+            var k = 1
+            var iterations = 0
+            do {
+                fact *= k
+                lastTerm = 1.0 / fact
+                sum += lastTerm
+                iterations++
+                k++
+            } while (k <= n)
+
+            result = buildString {
+                append("Сумма S = $sum\n")
+                append("Последнее слагаемое = $lastTerm\n")
+                append("Количество повторений цикла = $iterations")
             }
         }) {
             Text("Вычислить")
         }
 
         Spacer(Modifier.height(16.dp))
-        Text(text = "Результат: $result")
+        Text(text = "Результат:\n$result")
     }
 }
 
