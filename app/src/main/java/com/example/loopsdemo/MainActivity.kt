@@ -71,15 +71,16 @@ fun LoopsScreen(modifier: Modifier = Modifier) {
             if (n == null || n <= 0) {
                 result = "Введите натуральное n"
             } else {
-                // Цикл while: проверка условия перед каждой итерацией
+                // Цикл do-while: тело выполняется минимум один раз,
+                // условие проверяется в конце
                 var sum = 0.0
                 var fact = 1.0
                 var k = 1
-                while (k <= n) {
+                do {
                     fact *= k
                     sum += 1.0 / fact
                     k++
-                }
+                } while (k <= n)
                 result = "S = $sum"
             }
         }) {
