@@ -71,12 +71,14 @@ fun LoopsScreen(modifier: Modifier = Modifier) {
             if (n == null || n <= 0) {
                 result = "Введите натуральное n"
             } else {
-                // Цикл for: количество повторений известно заранее
+                // Цикл while: проверка условия перед каждой итерацией
                 var sum = 0.0
                 var fact = 1.0
-                for (k in 1..n) {
+                var k = 1
+                while (k <= n) {
                     fact *= k
                     sum += 1.0 / fact
+                    k++
                 }
                 result = "S = $sum"
             }
